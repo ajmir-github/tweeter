@@ -52,12 +52,12 @@ const config: runtime.GetPrismaClientConfig = {
     "db": {
       "url": {
         "fromEnvVar": null,
-        "value": "file:../src/model/dev.db"
+        "value": "file:../dev.db"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/model/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  // url      = env(\"DATABASE_URL\")\n  url      = \"file:../src/model/dev.db\"\n}\n\nmodel Profile {\n  id   Int     @id @default(autoincrement())\n  name String?\n}\n",
-  "inlineSchemaHash": "20b760103ffbe1bd80021bf96634741d5183c5a4c977eed63f0cd7e6b7bf494a",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/model/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  // url      = env(\"DATABASE_URL\")\n  url      = \"file:../dev.db\"\n}\n\nmodel Profile {\n  id   Int     @id @default(autoincrement())\n  name String?\n}\n",
+  "inlineSchemaHash": "375af4f267115d3abf5efd636fefa9d71336e214684e9eaaf0c05cc09e16251b",
   "copyEngine": true,
   "runtimeDataModel": {
     "models": {},
