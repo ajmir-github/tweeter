@@ -2,8 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/model/prisma"
+  provider   = "prisma-client"
+  output     = "../src/model/prisma"
+  engineType = "client" // no Rust engine
 }
 
 datasource db {
