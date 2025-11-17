@@ -26,3 +26,5 @@ dist-ssr
 /src/generated/prisma
 
 /prisma/src/prismaClient
+
+/src/prisma

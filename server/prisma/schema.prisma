@@ -1,19 +1,84 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider      = "prisma-client"
-  output        = "../src/model/prisma"
-  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  provider = "prisma-client"
+  output   = "../src/prisma"
+  runtime  = "nodejs"
 }
 
 datasource db {
-  provider = "sqlite"
-  // url      = env("DATABASE_URL")
-  url      = "file:../dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model Profile {
-  id   Int     @id @default(autoincrement())
-  name String?
+enum Role {
+  USER
+  ADMIN
+  EMPLOYEE
+}
+
+model User {
+  id       String    @id @unique @default(uuid())
+  email    String    @unique
+  password String
+  name     String
+  phone    String    @unique
+  address  String
+  role     Role      @default(USER)
+  // Relationships
+  orders   Order[]
+  reviews  Reviews[]
+}
+
+model Category {
+  id           String    @id @unique @default(uuid())
+  categoryName String    @unique
+  // Relationships
+  product      Product[]
+}
+
+model Product {
+  id          String    @id @unique @default(uuid())
+  name        String
+  stock       Int
+  price       Float
+  images      String[]
+  description String
+  // Keep the listings smartly ordered
+  sortOrder   Int       @default(0)
+  featured    Boolean   @default(false)
+  // Relationships
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  reviews     Reviews[]
+}
+
+model Reviews {
+  id      String  @id @unique @default(uuid())
+  comment String?
+  rating  Int
+
+  // Relationships
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId])
+}
+
+enum Status {
+  PREPARING
+  SHIPPED
+  DELIVERD
+}
+
+model Order {
+  id      String   @id @unique @default(uuid())
+  status  Status   @default(PREPARING)
+  address String
+  total   Float
+  time    DateTime @default(now())
+  // Relationships
+  userId  String
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
