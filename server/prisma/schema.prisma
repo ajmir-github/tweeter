@@ -36,19 +36,24 @@ model Category {
 }
 
 model Product {
-  id          String    @id @unique @default(uuid())
+  id          String      @id @unique @default(uuid())
   name        String
   stock       Int
   price       Float
   images      String[]
   description String
   // Keep the listings smartly ordered
-  sortOrder   Int       @default(0)
-  featured    Boolean   @default(false)
+  sortOrder   Int         @default(0)
+  featured    Boolean     @default(false)
   // Relationships
-  category    Category  @relation(fields: [categoryId], references: [id])
+  category    Category    @relation(fields: [categoryId], references: [id])
   categoryId  String
   reviews     Reviews[]
+  orderItems  OrderItem[]
+
+  // index
+  @@index([name])
+  @@index([featured])
 }
 
 model Reviews {
@@ -69,17 +74,32 @@ model Reviews {
 enum Status {
   PREPARING
   SHIPPED
-  DELIVERD
+  DELIVERED
   CANCELLED
 }
 
 model Order {
-  id      String   @id @unique @default(uuid())
-  status  Status   @default(PREPARING)
+  id      String      @id @unique @default(uuid())
+  status  Status      @default(PREPARING)
   address String
   total   Float
-  time    DateTime @default(now())
+  time    DateTime    @default(now())
   // Relationships
   userId  String
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items   OrderItem[]
+
+  // index
+  @@index([status])
+  @@index([time])
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  quantity  Int
+  price     Float
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
 }
