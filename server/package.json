@@ -7,22 +7,23 @@
     "start": "node dist/index.js",
     "build": "prisma generate && tsc",
     "dev": "nodemon src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon src/test.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@types/chance": "^1.1.7",
     "@types/express": "^5.0.5",
     "nodemon": "^3.1.11",
-    "prisma": "^6.19.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "chance": "^1.1.13"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "uuid": "^13.0.0",
     "zod": "^4.1.12"
   }
 }
