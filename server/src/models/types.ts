@@ -1,35 +1,39 @@
-enum UserRole {
+export enum UserRole {
   USER = "USER",
   ADMIN = "ADMIN",
   EMPLOYEE = "EMPLOYEE",
 }
 
-interface BaseDocument {
+export interface BaseDocument {
   id: string;
-}
-export interface User extends BaseDocument {
-  phone: string;
-  password: string;
-  name: string;
-  email?: string;
-  address?: string;
-  role: UserRole;
   createdAt: Date;
-  lastLogin: Date;
-  // soft delete
-  isDeleted: boolean;
-  deletedAt: Date;
-  // Relationships
-  //   orders: Order[];
-  //   reviews: Reviews[];
+  updatedAt?: Date;
+  isDeleted?: boolean;
+  deletedAt?: Date;
 }
 
+// User
+export interface User extends BaseDocument {
+  email: string;
+  password: string;
+  name: string;
+  phone?: string;
+  address?: string;
+  role: UserRole;
+  lastLogin: Date;
+  // Relationships
+  // orders: Order[];
+  // reviews: Review[];
+}
+
+// Category
 export interface Category extends BaseDocument {
   name: string;
   // Relationships
-  //   products: Product[];
+  // products: Product[];
 }
 
+// Product
 export interface Product extends BaseDocument {
   name: string;
   stock: number;
@@ -38,41 +42,47 @@ export interface Product extends BaseDocument {
   description: string;
   sortOrder: number;
   featured: boolean;
+  categoryId: string;
   // Relationships
-  productId: string;
-  //   reviews:Reviews[],
+  // reviews: Review[];
 }
 
+// Review
 export interface Review extends BaseDocument {
   comment?: string;
   rating: number;
-  // Relationships
   userId: string;
   productId: string;
-  //   user:User,
-  //   product:Product
+  // Relationships
+  // user: User;
+  // product: Product;
 }
-enum OrderStatus {
+
+export enum OrderStatus {
   PREPARING = "PREPARING",
   SHIPPED = "SHIPPED",
   DELIVERED = "DELIVERED",
   CANCELLED = "CANCELLED",
 }
+
+// Order
 export interface Order extends BaseDocument {
   status: OrderStatus;
   address: string;
   total: number;
   time: Date;
-  // Relationships
   userId: string;
-  //   items: OrderItem[];
-  //   user: User;
+  // Relationships
+  // items: OrderItem[];
+  // user: User;
 }
+
+// OrderItem
 export interface OrderItem extends BaseDocument {
   quantity: number;
   price: number;
-  // Relationships
   productId: string;
   orderId: string;
-  //   order:Order
+  // Relationships
+  // order: Order;
 }

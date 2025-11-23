@@ -14,15 +14,19 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/chance": "^1.1.7",
     "@types/express": "^5.0.5",
+    "@types/jsonwebtoken": "^9.0.10",
+    "chance": "^1.1.13",
     "nodemon": "^3.1.11",
-    "typescript": "^5.9.3",
-    "chance": "^1.1.13"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "uuid": "^13.0.0",
     "zod": "^4.1.12"
   }

@@ -40,13 +40,13 @@ export class Collection<Document extends { id: string }> {
   }
 
   // CRUD methods
-  async find(where: (doc: Document) => boolean) {
+  async find(where: (doc: Document) => boolean | undefined) {
     const documents = await this.read();
     const found = documents.find(where);
     return found ? clone(found) : null;
   }
 
-  async findMany(where?: (doc: Document) => boolean) {
+  async findMany(where?: (doc: Document) => boolean | undefined) {
     const documents = await this.read();
     const result = where ? documents.filter(where) : documents;
     return result.map(clone);
@@ -81,7 +81,7 @@ export class Collection<Document extends { id: string }> {
   }
 
   async updateMany(
-    where: (doc: Document) => boolean,
+    where: (doc: Document) => boolean | undefined,
     changes: Partial<Document>
   ) {
     const documents = await this.read();
@@ -102,7 +102,7 @@ export class Collection<Document extends { id: string }> {
     return true;
   }
 
-  async deleteMany(where: (doc: Document) => boolean) {
+  async deleteMany(where: (doc: Document) => boolean | undefined) {
     const documents = await this.read();
     const remaining = documents.filter((doc) => !where(doc));
     const deletedCount = documents.length - remaining.length;
