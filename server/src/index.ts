@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { CorsOption, Port, ProjectDirectory } from "./constants";
-import { trpcApp, appRouter } from "./trpcApp";
+import { trpcApp, appRouter } from "./trpc";
 
 const app = express();
 
