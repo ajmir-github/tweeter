@@ -1,7 +1,4 @@
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { initTRPC, TRPCError } from "@trpc/server";
-import superjson from "superjson";
-import { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import UserRouter from "./UserRouter";
 import ProductRouter from "./ProductRouter";
 import AuthRouter from "./AuthRouter";
@@ -10,6 +7,8 @@ import OrderRouter from "./OrderRouter";
 import OrderItemRouter from "./OrderItemRouter";
 import * as encryption from "../libs/encryption";
 import * as Database from "../models";
+import { CreateExpressContextOptions } from "@trpc/server/adapters/express";
+import { router } from "./core";
 
 const createContext = ({ req, res }: CreateExpressContextOptions) => {
   return {
@@ -17,18 +16,7 @@ const createContext = ({ req, res }: CreateExpressContextOptions) => {
     Database,
   };
 }; // no context
-type Context = ReturnType<typeof createContext>;
-
-type Meta = {
-  authRequired?: boolean;
-  roleRequired?: any[];
-};
-
-export const trpcRoot = initTRPC.context<Context>().meta<Meta>().create({
-  transformer: superjson,
-});
-export const router = trpcRoot.router;
-export const procedure = trpcRoot.procedure;
+export type Context = ReturnType<typeof createContext>;
 
 export const appRouter = router({
   auth: AuthRouter,

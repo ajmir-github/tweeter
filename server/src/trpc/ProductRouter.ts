@@ -1,6 +1,10 @@
-import { router } from "./index";
+import { procedure, router } from "./core";
 
 // product and review
-const ProductRouter = router({});
+const ProductRouter = router({
+  test: procedure.query(() => {
+    return [1, 2];
+  }),
+});
 
 export default ProductRouter;
