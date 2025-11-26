@@ -1,5 +1,6 @@
-import { CorsOptions } from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { CorsOptions } from "cors";
 dotenv.config();
 
 function validateEnv(name: string, defaultValue?: string) {
@@ -17,3 +18,6 @@ export const Port = validateEnv("PORT", "3000");
 export const CorsOption: CorsOptions = {
   origin: ClientURL,
 };
+
+export const ProjectDirectory = process.cwd();
+export const PublicDirectory = path.join(ProjectDirectory, "public");
