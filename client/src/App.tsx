@@ -1,21 +1,21 @@
 import { Route, Routes } from "react-router";
-import HomePage from "./pages/home";
-import CartPage from "./pages/cart";
-import LoginPage from "./pages/login";
-import RegisterPage from "./pages/register";
-import NotFoundPage from "./pages/notFoundPage";
-import ProductsPage from "./pages/products";
-import ProductPage from "./pages/product";
-import Layout from "./components/layout";
+import Layout from "./components/Layout";
+import CartPage from "./routes/cart";
+import HomePage from "./routes/home";
+import LoginPage from "./routes/login";
+import NotFoundPage from "./routes/notFoundPage";
+import ProductPage from "./routes/product";
+import ProductsPage from "./routes/products";
+import RegisterPage from "./routes/register";
 
 function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="cart" element={<CartPage />} />
-        <Route path="products" element={<ProductsPage />} />
-        <Route path="product/:productId" element={<ProductPage />} />
+        <Route path="profile" element={<CartPage />} />
+        <Route path="notification" element={<ProductsPage />} />
+        <Route path="hashtag" element={<ProductPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="*" element={<NotFoundPage />} />
