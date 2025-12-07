@@ -406,7 +406,6 @@ export type LikeCreateOrConnectWithoutUserInput = {
 
 export type LikeCreateManyUserInputEnvelope = {
   data: Prisma.LikeCreateManyUserInput | Prisma.LikeCreateManyUserInput[]
-  skipDuplicates?: boolean
 }
 
 export type LikeUpsertWithWhereUniqueWithoutUserInput = {
@@ -454,7 +453,6 @@ export type LikeCreateOrConnectWithoutTweetInput = {
 
 export type LikeCreateManyTweetInputEnvelope = {
   data: Prisma.LikeCreateManyTweetInput | Prisma.LikeCreateManyTweetInput[]
-  skipDuplicates?: boolean
 }
 
 export type LikeUpsertWithWhereUniqueWithoutTweetInput = {
@@ -1240,7 +1238,6 @@ export type LikeCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * The data used to create many Likes.
    */
   data: Prisma.LikeCreateManyInput | Prisma.LikeCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1259,7 +1256,6 @@ export type LikeCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Likes.
    */
   data: Prisma.LikeCreateManyInput | Prisma.LikeCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

@@ -158,7 +158,7 @@ export type TweetGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type TweetGroupByOutputType = {
   id: string
   content: string
-  hashtags: string[]
+  hashtags: runtime.JsonValue
   createdAt: Date
   updatedAt: Date
   authorId: string
@@ -189,7 +189,7 @@ export type TweetWhereInput = {
   NOT?: Prisma.TweetWhereInput | Prisma.TweetWhereInput[]
   id?: Prisma.StringFilter<"Tweet"> | string
   content?: Prisma.StringFilter<"Tweet"> | string
-  hashtags?: Prisma.StringNullableListFilter<"Tweet">
+  hashtags?: Prisma.JsonFilter<"Tweet">
   createdAt?: Prisma.DateTimeFilter<"Tweet"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tweet"> | Date | string
   authorId?: Prisma.StringFilter<"Tweet"> | string
@@ -224,7 +224,7 @@ export type TweetWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.TweetWhereInput[]
   NOT?: Prisma.TweetWhereInput | Prisma.TweetWhereInput[]
   content?: Prisma.StringFilter<"Tweet"> | string
-  hashtags?: Prisma.StringNullableListFilter<"Tweet">
+  hashtags?: Prisma.JsonFilter<"Tweet">
   createdAt?: Prisma.DateTimeFilter<"Tweet"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tweet"> | Date | string
   authorId?: Prisma.StringFilter<"Tweet"> | string
@@ -256,7 +256,7 @@ export type TweetScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TweetScalarWhereWithAggregatesInput | Prisma.TweetScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Tweet"> | string
   content?: Prisma.StringWithAggregatesFilter<"Tweet"> | string
-  hashtags?: Prisma.StringNullableListFilter<"Tweet">
+  hashtags?: Prisma.JsonWithAggregatesFilter<"Tweet">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Tweet"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Tweet"> | Date | string
   authorId?: Prisma.StringWithAggregatesFilter<"Tweet"> | string
@@ -266,7 +266,7 @@ export type TweetScalarWhereWithAggregatesInput = {
 export type TweetCreateInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutTweetsInput
@@ -280,7 +280,7 @@ export type TweetCreateInput = {
 export type TweetUncheckedCreateInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   authorId: string
@@ -294,7 +294,7 @@ export type TweetUncheckedCreateInput = {
 export type TweetUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutTweetsNestedInput
@@ -308,7 +308,7 @@ export type TweetUpdateInput = {
 export type TweetUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -322,7 +322,7 @@ export type TweetUncheckedUpdateInput = {
 export type TweetCreateManyInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   authorId: string
@@ -332,7 +332,7 @@ export type TweetCreateManyInput = {
 export type TweetUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -340,7 +340,7 @@ export type TweetUpdateManyMutationInput = {
 export type TweetUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -355,14 +355,6 @@ export type TweetListRelationFilter = {
 
 export type TweetOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
 }
 
 export type TweetNullableScalarRelationFilter = {
@@ -445,10 +437,6 @@ export type TweetUncheckedUpdateManyWithoutAuthorNestedInput = {
   deleteMany?: Prisma.TweetScalarWhereInput | Prisma.TweetScalarWhereInput[]
 }
 
-export type TweetCreatehashtagsInput = {
-  set: string[]
-}
-
 export type TweetCreateNestedManyWithoutParentInput = {
   create?: Prisma.XOR<Prisma.TweetCreateWithoutParentInput, Prisma.TweetUncheckedCreateWithoutParentInput> | Prisma.TweetCreateWithoutParentInput[] | Prisma.TweetUncheckedCreateWithoutParentInput[]
   connectOrCreate?: Prisma.TweetCreateOrConnectWithoutParentInput | Prisma.TweetCreateOrConnectWithoutParentInput[]
@@ -467,11 +455,6 @@ export type TweetUncheckedCreateNestedManyWithoutParentInput = {
   connectOrCreate?: Prisma.TweetCreateOrConnectWithoutParentInput | Prisma.TweetCreateOrConnectWithoutParentInput[]
   createMany?: Prisma.TweetCreateManyParentInputEnvelope
   connect?: Prisma.TweetWhereUniqueInput | Prisma.TweetWhereUniqueInput[]
-}
-
-export type TweetUpdatehashtagsInput = {
-  set?: string[]
-  push?: string | string[]
 }
 
 export type TweetUpdateManyWithoutParentNestedInput = {
@@ -561,7 +544,7 @@ export type TweetUpdateOneWithoutNotificationsNestedInput = {
 export type TweetCreateWithoutAuthorInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   media?: Prisma.MediaCreateNestedManyWithoutTweetInput
@@ -574,7 +557,7 @@ export type TweetCreateWithoutAuthorInput = {
 export type TweetUncheckedCreateWithoutAuthorInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   parentId?: string | null
@@ -591,7 +574,6 @@ export type TweetCreateOrConnectWithoutAuthorInput = {
 
 export type TweetCreateManyAuthorInputEnvelope = {
   data: Prisma.TweetCreateManyAuthorInput | Prisma.TweetCreateManyAuthorInput[]
-  skipDuplicates?: boolean
 }
 
 export type TweetUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -616,7 +598,7 @@ export type TweetScalarWhereInput = {
   NOT?: Prisma.TweetScalarWhereInput | Prisma.TweetScalarWhereInput[]
   id?: Prisma.StringFilter<"Tweet"> | string
   content?: Prisma.StringFilter<"Tweet"> | string
-  hashtags?: Prisma.StringNullableListFilter<"Tweet">
+  hashtags?: Prisma.JsonFilter<"Tweet">
   createdAt?: Prisma.DateTimeFilter<"Tweet"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Tweet"> | Date | string
   authorId?: Prisma.StringFilter<"Tweet"> | string
@@ -626,7 +608,7 @@ export type TweetScalarWhereInput = {
 export type TweetCreateWithoutParentInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutTweetsInput
@@ -639,7 +621,7 @@ export type TweetCreateWithoutParentInput = {
 export type TweetUncheckedCreateWithoutParentInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   authorId: string
@@ -656,13 +638,12 @@ export type TweetCreateOrConnectWithoutParentInput = {
 
 export type TweetCreateManyParentInputEnvelope = {
   data: Prisma.TweetCreateManyParentInput | Prisma.TweetCreateManyParentInput[]
-  skipDuplicates?: boolean
 }
 
 export type TweetCreateWithoutRepliesInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutTweetsInput
@@ -675,7 +656,7 @@ export type TweetCreateWithoutRepliesInput = {
 export type TweetUncheckedCreateWithoutRepliesInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   authorId: string
@@ -720,7 +701,7 @@ export type TweetUpdateToOneWithWhereWithoutRepliesInput = {
 export type TweetUpdateWithoutRepliesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutTweetsNestedInput
@@ -733,7 +714,7 @@ export type TweetUpdateWithoutRepliesInput = {
 export type TweetUncheckedUpdateWithoutRepliesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -746,7 +727,7 @@ export type TweetUncheckedUpdateWithoutRepliesInput = {
 export type TweetCreateWithoutMediaInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutTweetsInput
@@ -759,7 +740,7 @@ export type TweetCreateWithoutMediaInput = {
 export type TweetUncheckedCreateWithoutMediaInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   authorId: string
@@ -788,7 +769,7 @@ export type TweetUpdateToOneWithWhereWithoutMediaInput = {
 export type TweetUpdateWithoutMediaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutTweetsNestedInput
@@ -801,7 +782,7 @@ export type TweetUpdateWithoutMediaInput = {
 export type TweetUncheckedUpdateWithoutMediaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -814,7 +795,7 @@ export type TweetUncheckedUpdateWithoutMediaInput = {
 export type TweetCreateWithoutLikesInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutTweetsInput
@@ -827,7 +808,7 @@ export type TweetCreateWithoutLikesInput = {
 export type TweetUncheckedCreateWithoutLikesInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   authorId: string
@@ -856,7 +837,7 @@ export type TweetUpdateToOneWithWhereWithoutLikesInput = {
 export type TweetUpdateWithoutLikesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutTweetsNestedInput
@@ -869,7 +850,7 @@ export type TweetUpdateWithoutLikesInput = {
 export type TweetUncheckedUpdateWithoutLikesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -882,7 +863,7 @@ export type TweetUncheckedUpdateWithoutLikesInput = {
 export type TweetCreateWithoutNotificationsInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutTweetsInput
@@ -895,7 +876,7 @@ export type TweetCreateWithoutNotificationsInput = {
 export type TweetUncheckedCreateWithoutNotificationsInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   authorId: string
@@ -924,7 +905,7 @@ export type TweetUpdateToOneWithWhereWithoutNotificationsInput = {
 export type TweetUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutTweetsNestedInput
@@ -937,7 +918,7 @@ export type TweetUpdateWithoutNotificationsInput = {
 export type TweetUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -950,7 +931,7 @@ export type TweetUncheckedUpdateWithoutNotificationsInput = {
 export type TweetCreateManyAuthorInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   parentId?: string | null
@@ -959,7 +940,7 @@ export type TweetCreateManyAuthorInput = {
 export type TweetUpdateWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   media?: Prisma.MediaUpdateManyWithoutTweetNestedInput
@@ -972,7 +953,7 @@ export type TweetUpdateWithoutAuthorInput = {
 export type TweetUncheckedUpdateWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -985,7 +966,7 @@ export type TweetUncheckedUpdateWithoutAuthorInput = {
 export type TweetUncheckedUpdateManyWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -994,7 +975,7 @@ export type TweetUncheckedUpdateManyWithoutAuthorInput = {
 export type TweetCreateManyParentInput = {
   id?: string
   content: string
-  hashtags?: Prisma.TweetCreatehashtagsInput | string[]
+  hashtags: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
   authorId: string
@@ -1003,7 +984,7 @@ export type TweetCreateManyParentInput = {
 export type TweetUpdateWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutTweetsNestedInput
@@ -1016,7 +997,7 @@ export type TweetUpdateWithoutParentInput = {
 export type TweetUncheckedUpdateWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1029,7 +1010,7 @@ export type TweetUncheckedUpdateWithoutParentInput = {
 export type TweetUncheckedUpdateManyWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  hashtags?: Prisma.TweetUpdatehashtagsInput | string[]
+  hashtags?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1176,7 +1157,7 @@ export type $TweetPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     content: string
-    hashtags: string[]
+    hashtags: runtime.JsonValue
     createdAt: Date
     updatedAt: Date
     authorId: string
@@ -1612,7 +1593,7 @@ export interface Prisma__TweetClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface TweetFieldRefs {
   readonly id: Prisma.FieldRef<"Tweet", 'String'>
   readonly content: Prisma.FieldRef<"Tweet", 'String'>
-  readonly hashtags: Prisma.FieldRef<"Tweet", 'String[]'>
+  readonly hashtags: Prisma.FieldRef<"Tweet", 'Json'>
   readonly createdAt: Prisma.FieldRef<"Tweet", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Tweet", 'DateTime'>
   readonly authorId: Prisma.FieldRef<"Tweet", 'String'>
@@ -1846,7 +1827,6 @@ export type TweetCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * The data used to create many Tweets.
    */
   data: Prisma.TweetCreateManyInput | Prisma.TweetCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1865,7 +1845,6 @@ export type TweetCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many Tweets.
    */
   data: Prisma.TweetCreateManyInput | Prisma.TweetCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
