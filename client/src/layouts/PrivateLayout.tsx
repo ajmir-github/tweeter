@@ -1,5 +1,7 @@
 import { Outlet } from "react-router";
 import Navbar from "../components/Navbar";
+import Box from "../components/ui/Box";
+import Container from "../components/ui/container";
 
 export default function PrivateLayout() {
   return (
@@ -8,11 +10,27 @@ export default function PrivateLayout() {
         <div className="sm:static fixed w-full sm:bottom-auto bottom-0 sm:left-auto left-0 sm:row-span-2">
           <Navbar />
         </div>
-        <div className="feed col-span-1 sm:col-span-2 grow rounded-xl border border-gray-300 overflow-clip grid grid-cols-1 gap-0.5">
+        <Container className="col-span-1 sm:col-span-2">
           <Outlet />
-        </div>
-        <div className="col-span-1 sm:col-span-2 md:col-span-1 bg-white rounded-xl border border-gray-300 p-4">
-          <div>right</div>
+        </Container>
+        <div className="flex flex-col col-span-1 sm:col-span-2 md:col-span-1 gap-4">
+          <Container>
+            <Box className="text-lg font-semibold">Trends</Box>
+            <Box>
+              <div>Sports</div>
+              <div>News</div>
+              <div>Politics</div>
+              <div>Finince</div>
+            </Box>
+          </Container>
+          <Container>
+            <Box className="text-lg font-semibold">Who to follow</Box>
+            <Box>
+              <div>Alex</div>
+              <div>Peter</div>
+              <div>Ahmed</div>
+            </Box>
+          </Container>
         </div>
       </div>
     </div>

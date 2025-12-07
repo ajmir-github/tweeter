@@ -1,12 +1,10 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
-import { DatabaseURL } from "./constants";
+import { PrismaPg } from "@prisma/adapter-pg";
+import "dotenv/config";
+import { PrismaClient } from "./prisma/client";
 
-export const client = new MongoClient(DatabaseURL, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
+const connectionString = `${process.env.DATABASE_URL}`;
 
-export const database = client.db();
+const adapter = new PrismaPg({ connectionString });
+const prisma = new PrismaClient({ adapter });
+
+export { prisma };

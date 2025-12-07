@@ -12,7 +12,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "module": "module",
   "dependencies": {
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
@@ -25,7 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^7.0.0",
     "pg": "^8.16.3",
-    "superjson": "^2.2.5",
+    "superjson": "^2.2.6",
     "uuid": "^13.0.0",
     "zod": "^4.1.12"
   },
