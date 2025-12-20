@@ -2,7 +2,7 @@ import { Server } from "../services";
 
 export default function HomePage() {
   const handleRequest = async () => {
-    const data = await Server.userList.query({ limit: 22 });
+    const data = await Server.test.query();
     console.log(data);
   };
 

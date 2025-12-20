@@ -1,5 +1,6 @@
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
-import type AppRouter from "../../../server/src";
+import superjson from "superjson";
+import type AppRouter from "../../../server";
 import { SERVER_URL } from "../constants";
 
 function getAuthToken() {
@@ -18,6 +19,7 @@ export const Server = createTRPCClient<AppRouter>({
           authorization: getAuthToken(),
         };
       },
+      transformer: superjson,
     }),
   ],
 });

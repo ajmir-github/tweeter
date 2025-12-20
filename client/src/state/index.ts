@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import cartSlice, { localCart } from "./cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import cartSlice, { localCart } from "./userSlice";
 
 // export the actions
 export const actions = {

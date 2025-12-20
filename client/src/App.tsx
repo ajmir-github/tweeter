@@ -8,7 +8,6 @@ import NotFoundPage from "./routes/notFoundPage";
 import ProductPage from "./routes/product";
 import ProductsPage from "./routes/products";
 import RegisterPage from "./routes/register";
-
 function App() {
   return (
     <Routes>
