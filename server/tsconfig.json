@@ -1,22 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    // "target": "esnext",
-    // "module": "nodenext",
-    // "moduleResolution": "nodenext",
-    // "sourceMap": true,
-    // "strict": true,
+    // Treat files as modules even if it doesn't use import/export
+    "moduleDetection": "force",
+    // Ignore module structure
+    "module": "Preserve",
+    // Allow JSON modules to be imported
+    "resolveJsonModule": true,
+    // Allow JS files to be imported from TS and vice versa
+    "allowJs": true,
+    // Use correct ESM import behavior
     "esModuleInterop": true,
-    "noImplicitAny": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    // Disallow features that require cross-file awareness
+    "isolatedModules": true,
+    // tRPC requirement
+    "strict": true,
+    "moduleResolution": "Node",
+    "skipLibCheck": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
 }

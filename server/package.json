@@ -1,45 +1,40 @@
 {
-  "name": "gainer-server",
+  "name": "tweeter-clone-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "npx prisma generate",
-    "start": "ts-node src/index.ts",
-    "dev": "nodemon --watch src/ src/index.ts",
-    "test": "nodemon --watch src/ src/test.ts"
+    "start": "tsx --env-file=.env ./index.ts",
+    "dev": "tsx watch --env-file=.env ./index.ts",
+    "build": "prisma generate",
+    "test": "tsx watch --env-file=.env ./test.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.1.0",
-    "@prisma/adapter-pg": "^7.1.0",
-    "@prisma/client": "^7.1.0",
+    "@prisma/client": "^7.2.0",
     "@trpc/client": "^11.7.2",
     "@trpc/server": "^11.7.2",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "^7.0.0",
-    "pg": "^8.16.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.0.2",
     "superjson": "^2.2.6",
-    "uuid": "^13.0.0",
-    "zod": "^4.1.12"
+    "zod": "^4.1.13"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
     "@types/better-sqlite3": "^7.6.13",
     "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.5",
+    "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.10.1",
-    "@types/pg": "^8.15.6",
-    "nodemon": "^3.1.11",
-    "prisma": "^7.1.0",
-    "ts-node": "^10.9.2",
+    "@types/node": "^24.10.3",
+    "prisma": "^7.2.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }

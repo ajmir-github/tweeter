@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "../src/prisma"
+  output   = "./generated"
 }
 
 datasource db {
@@ -16,34 +16,39 @@ model User {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
-  name      String?
-  bio       String?
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
+  profileId             String         @unique
+  profile               Profile?
+  // others
   tweets                Tweet[]
   likes                 Like[]
   followers             Follower[]     @relation("UserFollowers")
   following             Follower[]     @relation("UserFollowing")
   notificationsReceived Notification[] @relation("NotificationsReceived")
   notificationsSent     Notification[] @relation("NotificationsSent")
-
-  // Avatar stored as Media (one-to-one)
-  avatar   Media?  @relation("UserAvatar", fields: [avatarId], references: [id], onDelete: SetNull)
-  avatarId String? @unique // <-- must be unique
 }
 
-enum MediaType {
-  IMAGE
-  VIDEO
-  GIF
+model Profile {
+  id        String   @id @default(uuid())
+  name      String
+  bio       String?
+  avatarURL String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 }
 
 model Tweet {
   id        String   @id @default(uuid())
   content   String
+  images    Json // array of images
+  videos    String?
   hashtags  Json // array of hashtags
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -51,28 +56,12 @@ model Tweet {
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId String
 
-  media    Media[]
   likes    Like[]
   replies  Tweet[] @relation("TweetReplies")
   parent   Tweet?  @relation("TweetReplies", fields: [parentId], references: [id], onDelete: Cascade)
   parentId String?
 
   notifications Notification[]
-}
-
-model Media {
-  id        String    @id @default(uuid())
-  url       String
-  type      MediaType
-  altText   String?
-  createdAt DateTime  @default(now())
-
-  // Tweet attachment
-  tweet   Tweet?  @relation(fields: [tweetId], references: [id], onDelete: Cascade)
-  tweetId String?
-
-  // User avatar
-  user User? @relation("UserAvatar")
 }
 
 model Like {
