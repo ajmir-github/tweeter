@@ -7,41 +7,23 @@ datasource db {
   provider = "sqlite"
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  profileId             String?        @unique
-  profile               Profile?
-  // others
-  tweets                Tweet[]
-  likes                 Like[]
-  followers             Follower[]     @relation("UserFollowers")
-  following             Follower[]     @relation("UserFollowing")
-  notificationsReceived Notification[] @relation("NotificationsReceived")
-  notificationsSent     Notification[] @relation("NotificationsSent")
-}
-
-model Profile {
-  id        String   @id @default(uuid())
   name      String
   bio       String?
   avatarURL String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  // Relations
+  tweets                Tweet[]
+  likes                 Like[]
+  followers             Follower[]     @relation("UserFollowers")
+  following             Follower[]     @relation("UserFollowing")
+  notificationsReceived Notification[] @relation("NotificationsReceived")
+  notificationsSent     Notification[] @relation("NotificationsSent")
 }
 
 model Tweet {

@@ -6,24 +6,16 @@ export type Notification = {
   createdAt: string;
 };
 
-export type Role = "USER" | "ADMIN";
-
 export type NotificationType = "LIKE" | "FOLLOW" | "REPLY" | "MENTION";
 
-export type Profile = {
-  name: string;
-  id: string;
-  bio?: string;
-  avatarURL?: string;
-  createdAt: string;
-  updatedAt: string;
-};
 export type User = {
-  id: string;
-  createdAt: string;
+  name: string;
   email: string;
   password: string;
-  role: Role;
+  id: string;
+  bio: string | null;
+  avatarURL: string | null;
+  createdAt: string;
   updatedAt: string;
 };
 

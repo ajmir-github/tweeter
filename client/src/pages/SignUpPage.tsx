@@ -8,8 +8,9 @@ import catchValidationError from "../utils/catchValidationError";
 import LocalToken from "../utils/LocalToken";
 
 const inputValidator = z.object({
+  name: z.string(3),
   email: z.email(),
-  password: z.string().min(2),
+  password: z.string().min(6),
 });
 
 type Inputs = z.output<typeof inputValidator>;
@@ -41,6 +42,13 @@ export default function SignUpPage() {
         className="bg-white p-4 gap-4 grid"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <div className="grid gap-2">
+          <div className="font-semibold text-sm">Name:</div>
+          <input className="bg-gray-200 rounded-xl p-2" {...register("name")} />
+          {errors.name && (
+            <div className="text-red-500 text-xs">{errors.name.message}</div>
+          )}
+        </div>
         <div className="grid gap-2">
           <div className="font-semibold text-sm">Email:</div>
           <input

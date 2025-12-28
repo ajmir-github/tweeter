@@ -1,8 +1,8 @@
+import cli from "cli-color";
 import app from "./app";
-import { ClientURL, PORT } from "./constants";
-export { type AppRouter as default } from "./trpc";
+import { PORT } from "./constants";
 
 // app listener
 app.listen(PORT, () =>
-  console.log(`Server is running\n\tport: ${PORT}\n\tclient: ${ClientURL}`)
+  console.log(cli.green(`Server is running on port: ${PORT}`))
 );
