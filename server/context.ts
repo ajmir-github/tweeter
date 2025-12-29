@@ -7,58 +7,36 @@ import {
 } from "./utils/expressContext";
 export * from "./utils/expressContext";
 
-export default createContext((request) => {
+export const context = createContext((request) => {
+  return { v: 1 };
+});
+
+export const authOptionalContext = context.use(async (context, request) => {
   // get the token and decode it
-  const getToken = () => {
-    if (!request.headers.authorization) return null;
-    const token = request.headers.authorization.split(" ")[1];
-    try {
-      return verifyToken(token);
-    } catch (error) {
-      throw new ServerError(
-        error instanceof Error ? error.message : "Failed to verify the token!",
-        StatusCodes.UNAUTHORIZED
-      );
-    }
-  };
+  if (!request.headers.authorization) return { auth: null };
+  const token = request.headers.authorization.split(" ")[1];
+  const { id } = verifyToken(token);
 
-  // get the authenticated user or return null
-  const getAuthSafely = async () => {
-    // decode the token
-    const token = getToken();
-    if (!token) return null;
-    // find the user
-    const user = await database.user.findUnique({
-      where: {
-        id: token.id,
-      },
-    });
+  if (!token) return { auth: null };
+  // find the user
+  const user = await database.user.findUnique({
+    where: {
+      id,
+    },
+  });
 
-    if (!user)
-      throw new ServerError(
-        "This user does not exist anymore!",
-        StatusCodes.UNAUTHORIZED
-      );
+  if (!user)
+    throw new ServerError(
+      "This user does not exist anymore!",
+      StatusCodes.UNAUTHORIZED
+    );
 
-    return user;
-  };
+  return { auth: user };
+});
 
-  // get the authenticated user of fail
-  const getAuth = async () => {
-    const auth = await getAuthSafely();
-    if (!auth)
-      throw new ServerError(
-        "Authentication required!",
-        StatusCodes.UNAUTHORIZED
-      );
-    return auth;
-  };
+export const authRequiredContext = authOptionalContext.use(({ auth }) => {
+  if (!auth)
+    throw new ServerError("Authentication required!", StatusCodes.UNAUTHORIZED);
 
-  // inject the methods
-  return {
-    getToken,
-    getAuth,
-  };
-}).use((context, req) => {
-  return {};
+  return { auth };
 });

@@ -3,6 +3,8 @@ import { StatusCodes } from "http-status-codes";
 import z, { ZodError } from "zod";
 export { StatusCodes };
 
+export type MergeObjects<A, B> = Omit<A, keyof B> & B;
+
 type Promisy<T> = T | Promise<T>;
 type ContextBuilder<Context extends {}> = (
   request: Express.Request,
@@ -65,7 +67,7 @@ export function createContext<Context extends {}>(
       return {
         ...context,
         ...(extend ?? {}),
-      } as Context & (Extend extends {} ? Extend : {});
+      } as MergeObjects<Context, Extend>;
     });
   }
   // handle function to handle the finals and send response back
