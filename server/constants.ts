@@ -1,6 +1,5 @@
 import "dotenv/config";
 import path from "path";
-export { StatusCodes } from "http-status-codes";
 
 export const ProjectDirectory = process.cwd();
 export const PublicDirectory = path.join(ProjectDirectory, "public");

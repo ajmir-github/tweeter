@@ -89,3 +89,19 @@ export function createContext<Context extends {}>(
   // done
   return { use, handle };
 }
+
+export const HandleErrors = [
+  // not found error
+  (req: Express.Request, res: Express.Response) => {
+    new ServerError(`URL: ${req.url} not found!`).send(res);
+  },
+  // all unhandled thrown errors
+  (
+    error: any,
+    _req: Express.Request,
+    res: Express.Response,
+    _next: Express.NextFunction
+  ) => {
+    ServerError.from(error).send(res);
+  },
+];

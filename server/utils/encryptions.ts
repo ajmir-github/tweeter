@@ -1,7 +1,7 @@
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { SecretKey, StatusCodes } from "../constants";
-import { ServerError } from "./expressContext";
+import { SecretKey } from "../constants";
+import { ServerError, StatusCodes } from "./expressContext";
 
 type JWTPayload = { id: string };
 const Options: jwt.SignOptions = {

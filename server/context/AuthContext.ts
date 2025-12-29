@@ -1,27 +1,20 @@
-import { database } from "./prisma";
-import { verifyToken } from "./utils/encryptions";
-import {
-  createContext,
-  ServerError,
-  StatusCodes,
-} from "./utils/expressContext";
-export * from "./utils/expressContext";
+import { database } from "../prisma";
+import { verifyToken } from "../utils/encryptions";
+import { ServerError, StatusCodes } from "../utils/expressContext";
+import Context from "./Context";
 
-export const context = createContext((request) => {
-  return { v: 1 };
-});
-
-export const authOptionalContext = context.use(async (context, request) => {
+export const AuthOptionalContext = Context.use(async (context, request) => {
   // get the token and decode it
   if (!request.headers.authorization) return { auth: null };
   const token = request.headers.authorization.split(" ")[1];
-  const { id } = verifyToken(token);
-
+  const payload = verifyToken(token);
+  if (!payload.id)
+    throw new ServerError("Token malformed!", StatusCodes.UNAUTHORIZED);
   if (!token) return { auth: null };
   // find the user
   const user = await database.user.findUnique({
     where: {
-      id,
+      id: payload.id,
     },
   });
 
@@ -34,7 +27,7 @@ export const authOptionalContext = context.use(async (context, request) => {
   return { auth: user };
 });
 
-export const authRequiredContext = authOptionalContext.use(({ auth }) => {
+export const AuthRequiredContext = AuthOptionalContext.use(({ auth }) => {
   if (!auth)
     throw new ServerError("Authentication required!", StatusCodes.UNAUTHORIZED);
 
