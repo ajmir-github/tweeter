@@ -5,13 +5,17 @@ import { ServerError, StatusCodes } from "./expressContext";
 
 type JWTPayload = { id: string };
 const Options: jwt.SignOptions = {
-  expiresIn: "1h",
+  expiresIn: "45d",
 };
 const Salt = bcryptjs.genSaltSync(10);
 
 export const signToken = (payload: JWTPayload): string => {
+  return jwt.sign(payload, SecretKey, Options);
+};
+
+export const verifyToken = (token: string) => {
   try {
-    return jwt.sign(payload, SecretKey, Options);
+    return jwt.verify(token, SecretKey) as JWTPayload;
   } catch (error) {
     if (error instanceof jwt.NotBeforeError) {
       throw new ServerError(
@@ -25,10 +29,6 @@ export const signToken = (payload: JWTPayload): string => {
     }
     throw ServerError.from(error);
   }
-};
-
-export const verifyToken = (token: string) => {
-  return jwt.verify(token, SecretKey) as JWTPayload;
 };
 
 export const hashPassword = async (password: string) => {

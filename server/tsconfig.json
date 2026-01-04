@@ -15,6 +15,6 @@
     // tRPC requirement
     "strict": true,
     "moduleResolution": "Node",
-    // "skipLibCheck": true
+    "skipLibCheck": true
   },
 }
