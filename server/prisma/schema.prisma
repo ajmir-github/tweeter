@@ -4,11 +4,11 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
   name      String
@@ -27,47 +27,47 @@ model User {
 }
 
 model Tweet {
-  id        String   @id @default(uuid())
+  id        Int      @id @default(autoincrement())
   content   String
-  images    Json // array of images
+  images    String[] // array of images
   videos    String?
-  hashtags  Json // array of hashtags
+  hashtags  String[] // array of hashtags
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId String
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId Int
 
   likes    Like[]
   replies  Tweet[] @relation("TweetReplies")
   parent   Tweet?  @relation("TweetReplies", fields: [parentId], references: [id], onDelete: Cascade)
-  parentId String?
+  parentId Int?
 
   notifications Notification[]
 }
 
 model Like {
-  id        String   @id @default(uuid())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
 
-  tweet   Tweet  @relation(fields: [tweetId], references: [id], onDelete: Cascade)
-  tweetId String
+  tweet   Tweet @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+  tweetId Int
 
   @@unique([userId, tweetId])
 }
 
 model Follower {
-  id        String   @id @default(uuid())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
 
-  follower   User   @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
-  followerId String
+  follower   User @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
+  followerId Int
 
-  following   User   @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
-  followingId String
+  following   User @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+  followingId Int
 
   @@unique([followerId, followingId])
 }
@@ -80,19 +80,19 @@ enum NotificationType {
 }
 
 model Notification {
-  id        String           @id @default(uuid())
+  id        Int              @id @default(autoincrement())
   type      NotificationType
   message   String?
   read      Boolean          @default(false)
   createdAt DateTime         @default(now())
 
   // Relations
-  recipient   User   @relation("NotificationsReceived", fields: [recipientId], references: [id], onDelete: Cascade)
-  recipientId String
+  recipient   User @relation("NotificationsReceived", fields: [recipientId], references: [id], onDelete: Cascade)
+  recipientId Int
 
-  actor   User?   @relation("NotificationsSent", fields: [actorId], references: [id], onDelete: Cascade)
-  actorId String?
+  actor   User? @relation("NotificationsSent", fields: [actorId], references: [id], onDelete: Cascade)
+  actorId Int?
 
-  tweet   Tweet?  @relation(fields: [tweetId], references: [id], onDelete: Cascade)
-  tweetId String?
+  tweet   Tweet? @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+  tweetId Int?
 }

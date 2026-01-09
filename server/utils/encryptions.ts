@@ -1,7 +1,6 @@
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { SecretKey } from "../constants";
-import { ServerError, StatusCodes } from "./expressContext";
 
 type JWTPayload = { id: string };
 const Options: jwt.SignOptions = {
@@ -18,16 +17,13 @@ export const verifyToken = (token: string) => {
     return jwt.verify(token, SecretKey) as JWTPayload;
   } catch (error) {
     if (error instanceof jwt.NotBeforeError) {
-      throw new ServerError(
-        "Token is not active yet",
-        StatusCodes.UNAUTHORIZED
-      );
+      throw new Error("Token is not active yet");
     } else if (error instanceof jwt.TokenExpiredError) {
-      throw new ServerError("Token has expired", StatusCodes.UNAUTHORIZED);
+      throw new Error("Token has expired");
     } else if (error instanceof jwt.JsonWebTokenError) {
-      throw new ServerError("Invalid Token", StatusCodes.UNAUTHORIZED);
+      throw new Error("Invalid Token");
     }
-    throw ServerError.from(error);
+    throw new Error("JWT failed");
   }
 };
 
