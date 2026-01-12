@@ -14,10 +14,10 @@ import classes from "../utils/classes";
 function CustomNavLink({
   icon,
   href,
-  lebal,
+  label,
   className,
 }: {
-  lebal: string;
+  label: string;
   href: string;
   icon: ReactNode;
   className?: string;
@@ -34,7 +34,7 @@ function CustomNavLink({
       }
     >
       {icon}
-      <div className="hidden sm:inline">{lebal}</div>
+      <div className="hidden sm:inline">{label}</div>
     </NavLink>
   );
 }
@@ -50,20 +50,20 @@ export default function Sidebar() {
         X
       </Link>
       <div className="flex flex-col gap-2">
-        <CustomNavLink href="/" lebal="Home" icon={<HomeIcon />} />
-        <CustomNavLink href="/search" lebal="Search" icon={<SearchIcon />} />
+        <CustomNavLink href="/" label="Home" icon={<HomeIcon />} />
+        <CustomNavLink href="/search" label="Search" icon={<SearchIcon />} />
         <CustomNavLink
           href="/explore"
-          lebal="Explore"
+          label="Explore"
           icon={<LayoutListIcon />}
         />
-        <CustomNavLink href="/profile" lebal="Profile" icon={<UserIcon />} />
+        <CustomNavLink href="/profile" label="Profile" icon={<UserIcon />} />
         <CustomNavLink
-          href="/notifcations"
-          lebal="Notification"
+          href="/notifications"
+          label="Notification"
           icon={<BellIcon />}
         />
-        <CustomNavLink href="/signin" lebal="Sign out" icon={<LogOutIcon />} />
+        <CustomNavLink href="/logout" label="Logout" icon={<LogOutIcon />} />
       </div>
     </div>
   );

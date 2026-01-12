@@ -24,7 +24,15 @@ async function traceProcess(label: string, func: Function) {
   console.log(cliColor.blue(`--- ${label} took ${endedAt - startedAt}`));
 }
 
-async function createUsers(number: number = 1000) {
+const counts = {
+  users: 100,
+  followers: 1000,
+  tweets: 1000,
+  likes: 10000,
+  notifications: 10000,
+};
+
+async function createUsers(number: number = counts.users) {
   const password: string = await hashPassword("123465");
   const { count } = await database.user.createMany({
     data: await createArrayOf(number, (id) => ({
@@ -41,27 +49,23 @@ async function createUsers(number: number = 1000) {
   console.log(`Added ${count} user/s!`);
 }
 
-async function createTweets(number: number = 10000) {
+async function createTweets(number: number = counts.tweets) {
   const hashtags = await createArrayOf(100, () => faker.book.genre());
   const images = await createArrayOf(100, () => faker.image.url());
   const tweets = await createArrayOf(number, (id) => ({
     id,
-    authorId: faker.number.int({ min: 1, max: 1000 }),
+    authorId: faker.number.int({ min: 1, max: counts.users }),
     content: faker.lorem.paragraph(),
-    hashtags: faker.datatype.boolean()
-      ? faker.helpers.arrayElements(hashtags)
-      : faker.helpers.arrayElements(hashtags),
-    images: faker.datatype.boolean() ? faker.helpers.arrayElements(images) : [],
+    hashtags: faker.helpers.arrayElements(hashtags, { min: 0, max: 5 }),
+    images: faker.helpers.arrayElements(images, { min: 0, max: 5 }),
   }));
   const replies = await createArrayOf(number, (id) => ({
     id: number + id,
-    authorId: faker.number.int({ min: 1, max: 1000 }),
+    authorId: faker.number.int({ min: 1, max: counts.users }),
     parentId: faker.number.int({ min: 1, max: number }),
     content: faker.lorem.paragraph(),
-    hashtags: faker.datatype.boolean()
-      ? faker.helpers.arrayElements(hashtags)
-      : faker.helpers.arrayElements(hashtags),
-    images: faker.datatype.boolean() ? faker.helpers.arrayElements(images) : [],
+    hashtags: faker.helpers.arrayElements(hashtags, { min: 0, max: 5 }),
+    images: faker.helpers.arrayElements(images, { min: 0, max: 5 }),
   }));
 
   const { count } = await database.tweet.createMany({
@@ -74,9 +78,9 @@ async function createTweets(number: number = 10000) {
 
 async function createLikes() {
   const { count } = await database.like.createMany({
-    data: await createArrayOf(100000, () => ({
-      tweetId: faker.number.int({ min: 1, max: 10000 }),
-      userId: faker.number.int({ min: 1, max: 1000 }),
+    data: await createArrayOf(counts.likes, () => ({
+      tweetId: faker.number.int({ min: 1, max: counts.tweets }),
+      userId: faker.number.int({ min: 1, max: counts.users }),
     })),
     skipDuplicates: true,
   });
@@ -85,9 +89,9 @@ async function createLikes() {
 
 async function createFollowers() {
   const { count } = await database.follower.createMany({
-    data: await createArrayOf(10000, () => ({
-      followerId: faker.number.int({ min: 1, max: 1000 }),
-      followingId: faker.number.int({ min: 1, max: 1000 }),
+    data: await createArrayOf(counts.followers, () => ({
+      followerId: faker.number.int({ min: 1, max: counts.users }),
+      followingId: faker.number.int({ min: 1, max: counts.users }),
     })),
     skipDuplicates: true,
   });
@@ -96,10 +100,10 @@ async function createFollowers() {
 
 async function createNotifications() {
   const { count } = await database.notification.createMany({
-    data: await createArrayOf(10000, () => ({
-      recipientId: faker.number.int({ min: 1, max: 1000 }),
+    data: await createArrayOf(counts.notifications, () => ({
+      recipientId: faker.number.int({ min: 1, max: counts.users }),
       actorId: faker.datatype.boolean()
-        ? faker.number.int({ min: 1, max: 1000 })
+        ? faker.number.int({ min: 1, max: counts.users })
         : null,
       type: faker.helpers.arrayElement([
         NotificationType.FOLLOW,
@@ -114,9 +118,9 @@ async function createNotifications() {
 }
 
 traceProcess("Seeding", async () => {
-  //   await createUsers();
-  //   await createTweets();
-  //   await createLikes();
-  //   await createFollowers();
-  //   await createNotifications();
+  await createUsers();
+  await createTweets();
+  await createLikes();
+  await createFollowers();
+  await createNotifications();
 });

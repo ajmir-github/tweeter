@@ -30,7 +30,7 @@ model Tweet {
   id        Int      @id @default(autoincrement())
   content   String
   images    String[] // array of images
-  videos    String?
+  video     String?
   hashtags  String[] // array of hashtags
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -1,7 +1,10 @@
-import { Outlet } from "react-router";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "@/components/Sidebar";
+import { useAppSelector } from "@/state";
+import { Navigate, Outlet } from "react-router";
 
-export default function PageLayout() {
+export default function PrivateLayout() {
+  const isAuthenticated = useAppSelector((state) => state.auth.user);
+  if (!isAuthenticated) return <Navigate to={"/login"} />;
   return (
     <div className=" h-full w-full flex justify-center">
       <div className="grow max-w-5xl flex">
