@@ -9,14 +9,10 @@ export type Notification = {
 export type NotificationType = "LIKE" | "FOLLOW" | "REPLY" | "MENTION";
 
 export type User = {
+  id: string;
   name: string;
   email: string;
-  password: string;
-  id: string;
-  bio: string | null;
-  avatarURL: string | null;
-  createdAt: string;
-  updatedAt: string;
+  avatar?: string;
 };
 
 export type Tweet = {

@@ -6,8 +6,8 @@ export default function PublicLayout() {
   if (isAuthenticated) return <Navigate to={"/"} />;
   return (
     <div className="h-full overflow-y-scroll hide-scrollbar flex justify-center">
-      <div className="grid max-w-md w-full p-4">
-        <img src="/images/logo/l.png" className="h-60 object-cover w-full" />
+      <div className="grid max-w-xs w-full">
+        <img src="/images/logo/l.png" className="w-full" />
         <Outlet />
       </div>
     </div>

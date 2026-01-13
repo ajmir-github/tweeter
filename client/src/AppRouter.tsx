@@ -4,11 +4,12 @@ import PublicLayout from "@/layouts/PublicLayout";
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/pages/LoginPage";
 import NotFoundPage from "@/pages/NotFoundPage";
-import ProductPage from "@/pages/ProductPage";
-import ProductsPage from "@/pages/ProductsPage";
 import ProfilePage from "@/pages/ProfilePage";
 import RegisterPage from "@/pages/RegisterPage";
 import { BrowserRouter, Route, Routes } from "react-router";
+import AddPost from "./pages/AddPost";
+import ExplorePages from "./pages/ExplorePage";
+import SearchPage from "./pages/SearchPage";
 
 export default function AppRouter() {
   return (
@@ -18,14 +19,15 @@ export default function AppRouter() {
           <Route element={<PrivateLayout />}>
             <Route index element={<HomePage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/notification" element={<ProductsPage />} />
-            <Route path="/hashtag" element={<ProductPage />} />
+            <Route path="/explore" element={<ExplorePages />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/add" element={<AddPost />} />
           </Route>
           <Route element={<PublicLayout />}>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="*" element={<NotFoundPage />} />
           </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

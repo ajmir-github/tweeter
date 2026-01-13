@@ -1,7 +1,21 @@
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Server } from "@/services";
 import { useAppDispatch } from "@/state";
+import authSlice from "@/state/authSlice";
+import handleFormError from "@/utils/handleFormError";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LogInIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
+import { toast } from "sonner";
 import z from "zod";
 
 const inputValidator = z.object({
@@ -13,66 +27,63 @@ type Inputs = z.output<typeof inputValidator>;
 
 export default function LoginPage() {
   const dispatch = useAppDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-  } = useForm<Inputs>({ resolver: zodResolver(inputValidator) });
-  const onSubmit = async (inputs: Inputs) => {};
+  const form = useForm<Inputs>({ resolver: zodResolver(inputValidator) });
+
+  const onSubmit = async (inputs: Inputs) =>
+    Server.auth.login
+      .mutate(inputs)
+      .then((res) => {
+        dispatch(authSlice.actions.signIn(res));
+        toast(`${res.user.name}, you are logged in!`);
+      })
+      .catch(handleFormError(form))
+      .catch(console.log);
 
   return (
-    <div className=" grow max-w-md  rounded-xl border border-gray-300 flex flex-col gap-px overflow-clip">
-      <h1 className=" bg-white p-4 text-lg font-bold">Sign in here!</h1>
-      <form
-        className="bg-white p-4 gap-4 grid"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="grid gap-2">
-          <div className="font-semibold text-sm">Email:</div>
-          <input
-            className="bg-gray-200 rounded-xl p-2"
-            {...register("email")}
-          />
-          {errors.email && (
-            <div className="text-red-500 text-xs">{errors.email.message}</div>
-          )}
-        </div>
-        <div className="grid gap-2">
-          <div className="font-semibold text-sm">Password:</div>
-          <input
-            className="bg-gray-200 rounded-xl p-2"
-            {...register("password")}
-          />
-          {errors.password && (
-            <div className="text-red-500 text-xs">
-              {errors.password.message}
-            </div>
-          )}
-        </div>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-xl font-bold uppercase">
+        Login to your user account!
+      </h1>
+      <form className="gap-4 grid" onSubmit={form.handleSubmit(onSubmit)}>
+        <FieldSet>
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <Input id="email" type="text" {...form.register("email")} />
+              <FieldError>
+                {form.formState.errors.email?.message?.toString()}
+              </FieldError>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor="password">Password</FieldLabel>
 
-        <div className="grid gap-2">
-          <button
-            className="bg-blue-500 p-2 rounded-xl text-white"
-            type="submit"
-          >
-            Sign in
-          </button>
-          {errors.root && (
-            <div className="text-red-500 text-xs">{errors.root.message}</div>
-          )}
-        </div>
+              <Input
+                id="password"
+                type="password"
+                {...form.register("password")}
+              />
+              <FieldError>
+                {form.formState.errors.password?.message?.toString()}
+              </FieldError>
+            </Field>
+            <Field>
+              <Button type="submit">
+                <LogInIcon />
+                Login
+              </Button>
+              <FieldError>
+                {form.formState.errors.root?.message?.toString()}
+              </FieldError>
+            </Field>
+          </FieldGroup>
+        </FieldSet>
       </form>
 
-      <div className="bg-white p-4 flex justify-between gap-2">
-        <Link
-          to={"/register"}
-          className="italic hover:text-blue-600 hover:underline"
-        >
-          Create a new account
+      <Button asChild variant={"link"}>
+        <Link to={"/register"}>
+          <span className="italic">Create a new account</span>
         </Link>
-        <div className="italic opacity-40">Forget password</div>
-      </div>
+      </Button>
     </div>
   );
 }

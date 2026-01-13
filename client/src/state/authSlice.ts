@@ -1,3 +1,4 @@
+import LocalToken from "@/utils/LocalToken";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { User } from "../services/types";
 
@@ -12,10 +13,15 @@ export default createSlice({
     user: null,
   } as AuthState,
   reducers: {
-    setUser: (state, action: PayloadAction<User>) => {
+    signIn(state, action: PayloadAction<{ user: User; token: string }>) {
+      LocalToken.set(action.payload.token);
+      state.user = action.payload.user;
+    },
+    update: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
-    clearUser: (state) => {
+    signOut: (state) => {
+      LocalToken.clear();
       state.user = null;
     },
   },

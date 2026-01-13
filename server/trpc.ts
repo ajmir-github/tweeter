@@ -1,7 +1,7 @@
 import { initTRPC } from "@trpc/server";
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import SuperJSON from "superjson";
-import { prettifyError, ZodError } from "zod";
+import { ZodError } from "zod";
 
 export const createContext = (opts: CreateExpressContextOptions) => {
   const { authorization } = opts.req.headers;
@@ -15,18 +15,18 @@ export type Context = ReturnType<typeof createContext>;
 
 export const trpc = initTRPC.context<Context>().create({
   transformer: SuperJSON,
+
   errorFormatter(opts) {
     const { shape, error } = opts;
     // if zod error
-    if (error.cause instanceof ZodError)
+    if (error.cause instanceof ZodError) {
       return {
         ...shape,
-        message: prettifyError(error.cause), // prettify => error.message
         data: {
-          ...shape.data,
-          errors: error.cause.issues, // simplify the error => error.data.errors
+          issues: error.cause.issues,
         },
       };
+    }
     // else
     return shape;
   },

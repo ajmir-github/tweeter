@@ -1,8 +1,10 @@
+import { TRPCError } from "@trpc/server";
 import _ from "lodash";
 import { v7 as uuid } from "uuid";
 import z from "zod";
 import { publicProcedure, router } from "../trpc";
-import { signToken } from "../utils/encryptions";
+import { signToken, verifyToken } from "../utils/encryptions";
+import { throwCustomZodError } from "../utils/zodError";
 
 interface User {
   id: string;
@@ -15,7 +17,7 @@ const User: User[] = [
   {
     id: "1",
     email: "ajmir@gmail.com",
-    password: "132465",
+    password: "123456",
     name: "Ajmir Raziqi",
   },
 ];
@@ -28,7 +30,21 @@ export default router({
         password: z.string().min(6),
       })
     )
-    .mutation((opts) => null),
+    .mutation(({ input }) => {
+      const user = User.find((user) => user.email === input.email);
+      if (!user)
+        throwCustomZodError({ path: "email", message: "Email not found!" });
+      if (user.password !== input.password)
+        throwCustomZodError({
+          path: "password",
+          message: "Password not matched!",
+        });
+      const token = signToken({ id: user.id });
+      return {
+        user,
+        token,
+      };
+    }),
   register: publicProcedure
     .input(
       z.object({
@@ -42,14 +58,13 @@ export default router({
         id: uuid(),
         ...input,
       };
+      const userWithSameEmail = User.findIndex(
+        (tUser) => tUser.email === user.email
+      );
+      if (userWithSameEmail !== -1)
+        throwCustomZodError({ path: "email", message: "Email already used!" });
       User.push(user);
-      z.object({
-        email: z
-          .email()
-          .refine((email) => User.findIndex((user) => user.email === email), {
-            message: "This email is already used!",
-          }),
-      }).parse(user);
+
       const token = signToken({ id: user.id });
       return {
         user: _.omit(user, ["password"]),
@@ -64,5 +79,11 @@ export default router({
       })
     )
     .mutation(() => 1),
-  self: publicProcedure.query((opts) => null),
+  self: publicProcedure.query(({ ctx: { token } }) => {
+    if (!token) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const { id } = verifyToken(token);
+    const user = User.find((user) => user.id === id);
+    if (!user) throw new TRPCError({ code: "UNAUTHORIZED" });
+    return user;
+  }),
 });
