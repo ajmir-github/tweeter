@@ -1,21 +1,25 @@
 import { Button } from "@/components/ui/button";
 import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  FieldSet,
-} from "@/components/ui/field";
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { FieldError } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Server } from "@/services";
 import { useAppDispatch } from "@/state";
 import authSlice from "@/state/authSlice";
 import handleFormError from "@/utils/handleFormError";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusIcon } from "lucide-react";
+import { Loader2, PlusSquareIcon } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
-import { toast } from "sonner";
 import z from "zod";
 
 const inputValidator = z.object({
@@ -27,69 +31,68 @@ const inputValidator = z.object({
 type Inputs = z.output<typeof inputValidator>;
 
 export default function RegisterPage() {
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const form = useForm<Inputs>({ resolver: zodResolver(inputValidator) });
   const onSubmit = async (inputs: Inputs) =>
     Server.auth.register
       .mutate(inputs)
-      .then((res) => {
-        dispatch(authSlice.actions.signIn(res));
-        toast(`${res.user.name}, your account is created!`);
-      })
+      .then((res) => dispatch(authSlice.actions.signIn(res)))
       .catch(handleFormError(form))
       .catch((e) => console.error(e.data));
 
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-xl font-bold uppercase">Create a new account!</h1>
-      <form className="gap-4 grid" onSubmit={form.handleSubmit(onSubmit)}>
-        <FieldSet>
-          <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="name">Name</FieldLabel>
-              <Input id="name" type="text" {...form.register("name")} />
-              <FieldError>
-                {form.formState.errors.name?.message?.toString()}
-              </FieldError>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input id="email" type="text" {...form.register("email")} />
-              <FieldError>
-                {form.formState.errors.email?.message?.toString()}
-              </FieldError>
-            </Field>
-
-            <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
-
+    <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-xs">
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Create a new account</CardTitle>
+          <CardDescription>
+            Enter your full name, email, and password to register
+          </CardDescription>
+          <CardAction>
+            <Button variant="link" asChild>
+              <Link to={"/login"}>Login</Link>
+            </Button>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col gap-6">
+            <div className="grid gap-2">
+              <Label htmlFor="name">Full Name</Label>
+              <Input id="name" type="name" {...form.register("name")} />
+              <FieldError>{form.formState.errors.name?.message}</FieldError>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" type="email" {...form.register("email")} />
+              <FieldError>{form.formState.errors.email?.message}</FieldError>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
                 {...form.register("password")}
               />
-              <FieldError>
-                {form.formState.errors.password?.message?.toString()}
-              </FieldError>
-            </Field>
-            <Field>
-              <Button type="submit">
-                <PlusIcon />
-                Login
-              </Button>
-              <FieldError>
-                {form.formState.errors.root?.message?.toString()}
-              </FieldError>
-            </Field>
-          </FieldGroup>
-        </FieldSet>
-      </form>
+              <FieldError>{form.formState.errors.password?.message}</FieldError>
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="flex-col gap-2">
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <PlusSquareIcon />
+            )}
+            Register
+          </Button>
 
-      <Button asChild variant={"link"}>
-        <Link to={"/login"}>
-          <span className="italic">login to yours existing account</span>
-        </Link>
-      </Button>
-    </div>
+          <Button variant="outline" className="w-full" disabled>
+            Login with Google
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }

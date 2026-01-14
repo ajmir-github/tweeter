@@ -1,15 +1,15 @@
 import AppLayout from "@/layouts/AppLayout";
 import PrivateLayout from "@/layouts/PrivateLayout";
 import PublicLayout from "@/layouts/PublicLayout";
+import AddPost from "@/pages/AddPost";
+import ExplorePages from "@/pages/ExplorePage";
 import HomePage from "@/pages/HomePage";
 import LoginPage from "@/pages/LoginPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import ProfilePage from "@/pages/ProfilePage";
 import RegisterPage from "@/pages/RegisterPage";
+import SearchPage from "@/pages/SearchPage";
 import { BrowserRouter, Route, Routes } from "react-router";
-import AddPost from "./pages/AddPost";
-import ExplorePages from "./pages/ExplorePage";
-import SearchPage from "./pages/SearchPage";
 
 export default function AppRouter() {
   return (

@@ -1,8 +1,8 @@
-import { Spinner } from "@/components/ui/spinner";
 import { Server } from "@/services";
 import { useAppDispatch } from "@/state";
 import authSlice from "@/state/authSlice";
 import LocalToken from "@/utils/LocalToken";
+import { Loader2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router";
 
@@ -25,17 +25,16 @@ export default function AppLayout() {
       });
   }, []);
 
+  if (loading)
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <Loader2Icon className="animate-spin" />
+      </div>
+    );
+
   return (
-    <div className="font-mono bg-linear-to-b  w-full h-dvh overflow-hidden">
-      {loading ? (
-        <div className="w-full h-full flex justify-center items-center">
-          <Spinner className="size-12 text-pink-500" />
-        </div>
-      ) : (
-        <div className="h-full max-w-4xl m-auto p-4">
-          <Outlet />
-        </div>
-      )}
+    <div className="w-full min-h-dvh">
+      <Outlet />
     </div>
   );
 }

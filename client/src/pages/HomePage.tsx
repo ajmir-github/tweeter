@@ -1,9 +1,5 @@
-import { Button } from "@/components/ui/button";
+import SnapList from "@/components/SnapList";
+
 export default function HomePage() {
-  return (
-    <>
-      <h1>HomePage</h1>
-      <Button>RUN</Button>
-    </>
-  );
+  return <SnapList />;
 }
