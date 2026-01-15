@@ -1,5 +1,18 @@
-import SnapList from "@/components/SnapList";
-
 export default function HomePage() {
-  return <SnapList />;
+  return (
+    <div className="w-full h-full overflow-x-hidden overflow-y-auto no-scrollbar">
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+      <div className="text-9xl">asdasdlksjflask</div>
+    </div>
+  );
 }

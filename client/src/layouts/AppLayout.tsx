@@ -27,13 +27,13 @@ export default function AppLayout() {
 
   if (loading)
     return (
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-dvh flex justify-center items-center">
         <Loader2Icon className="animate-spin" />
       </div>
     );
 
   return (
-    <div className="w-full min-h-dvh">
+    <div className="w-full h-dvh">
       <Outlet />
     </div>
   );

@@ -45,10 +45,8 @@ export default function RegisterPage() {
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-xs">
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Create a new account</CardTitle>
-          <CardDescription>
-            Enter your full name, email, and password to register
-          </CardDescription>
+          <CardTitle>Tamas: Social Media</CardTitle>
+          <CardDescription>Create a new account</CardDescription>
           <CardAction>
             <Button variant="link" asChild>
               <Link to={"/login"}>Login</Link>

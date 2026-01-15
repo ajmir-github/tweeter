@@ -49,10 +49,8 @@ export default function LoginPage() {
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-xs">
       <Card className="w-full">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardTitle>Tamas: Social Media</CardTitle>
+          <CardDescription>Login to your account</CardDescription>
           <CardAction>
             <Button variant="link" asChild>
               <Link to={"/register"}>Register</Link>

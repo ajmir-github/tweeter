@@ -5,8 +5,7 @@ export default function PublicLayout() {
   const isAuthenticated = useAppSelector((state) => state.auth.user);
   if (isAuthenticated) return <Navigate to={"/"} />;
   return (
-    <div className="flex flex-col items-center">
-      <img src="/images/logo/l.png" className="max-w-xs" />
+    <div className="flex flex-col items-center justify-center h-full">
       <Outlet />
     </div>
   );
