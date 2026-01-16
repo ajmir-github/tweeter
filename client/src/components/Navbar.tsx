@@ -24,8 +24,8 @@ const DLink = ({
     to={to}
     className={({ isActive }) =>
       cn(
-        "flex justify-center items-center gap-2 hover:bg-primary duration-300  p-2 sm:px-3 rounded-xl",
-        isActive && "bg-primary/80",
+        "flex justify-center items-center gap-2 hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary/50 rounded-xl  p-2 sm:px-3 duration-200",
+        isActive && "bg-primary text-primary-foreground",
         className
       )
     }
@@ -37,14 +37,12 @@ const DLink = ({
 
 export default function Navbar() {
   return (
-    <div className="w-full fixed bottom-0 left-0 flex justify-center">
-      <div className="bg-foreground/10 backdrop-blur-lg p-2 rounded-t-2xl flex items-center gap-2 justify-center">
-        <DLink to={"/"} icon={<HomeIcon />} label="Home" />
-        <DLink to={"/search"} icon={<SearchIcon />} label="Search" />
-        <DLink to={"/add"} icon={<PlusIcon />} label="Add" />
-        <DLink to={"/profile"} icon={<UserIcon />} label="Profile" />
-        <DLink to={"/settings"} icon={<SettingsIcon />} label="Settings" />
-      </div>
+    <div className="fixed bottom-0 left-[50%] translate-x-[-50%] ring ring-foreground/10 bg-secondary/10 backdrop-blur-lg p-2 rounded-t-2xl flex items-center gap-2 justify-center">
+      <DLink to={"/"} icon={<HomeIcon />} label="Home" />
+      <DLink to={"/search"} icon={<SearchIcon />} label="Search" />
+      <DLink to={"/add"} icon={<PlusIcon />} label="Add" />
+      <DLink to={"/profile"} icon={<UserIcon />} label="Profile" />
+      <DLink to={"/settings"} icon={<SettingsIcon />} label="Settings" />
     </div>
   );
 }
